@@ -11,7 +11,6 @@
             this.lastName = lastName;
         }
     }
-
     function create() {
         // get the values that are in the input fields
         const personIdElement = document.getElementById("person-id");
@@ -48,10 +47,131 @@
                 console.log("Status value ↓")
                 console.log(status);
                 console.log("Error value ↓")
-                console.log(error);                
+                console.log(error);
             }
         });
     }
+
+    function read() {
+    const personIdElement = document.getElementById("person-id").value;
+        $.ajax({
+            type: "GET",
+            crossDomain: true,
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: "/person-controller/read/" + personIdElement,
+            dataType: "JSON",
+            success: function(response) {
+                alert(JSON.stringify(response));
+            },
+            error: function(request, status, error) {
+                console.log("Error while digesting request")
+                console.log("Request value ↓")
+                console.log(request)
+                console.log("Status value ↓")
+                console.log(status);
+                console.log("Error value ↓")
+                console.log(error);
+            }
+        });
+    }
+
+    function readAll() {
+        $.ajax({
+            type: "GET",
+            crossDomain: true,
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: "/person-controller/readAll",
+            dataType: "JSON",
+            success: function(response) {
+                alert(JSON.stringify(response));
+            },
+            error: function(request, status, error) {
+                console.log("Error while digesting request")
+                console.log("Request value ↓")
+                console.log(request)
+                console.log("Status value ↓")
+                console.log(status);
+                console.log("Error value ↓")
+                console.log(error);
+            }
+        });
+    }
+    function update() {
+        // get the values that are in the input fields
+        const personIdElement = document.getElementById("person-id");
+        const firstNameElement = document.getElementById("first-name");
+        const lastNameElement = document.getElementById("last-name");
+
+        const personIdValue = personIdElement.value;
+        const firstNameValue = firstNameElement.value;
+        const lastNameValue = lastNameElement.value;
+        const person = new Person(personIdValue, firstNameValue, lastNameValue);
+
+        // call the create function of the spring boot app with the values
+        const personData = JSON.stringify(person);
+        console.log(personData);
+
+        $.ajax({
+            type: "PUT",
+            crossDomain: true,
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: "/person-controller/update/" + personIdValue,
+            data: personData,
+            dataType: "JSON",
+            success: function(response) {
+                alert(JSON.stringify(response));
+            },
+            error: function(request, status, error) {
+                console.log("Error while digesting request")
+                console.log("Request value ↓")
+                console.log(request)
+                console.log("Status value ↓")
+                console.log(status);
+                console.log("Error value ↓")
+                console.log(error);
+            }
+        });
+    }
+
+    function deletePerson() {
+    const personIdElement = document.getElementById("person-id").value;
+        $.ajax({
+            type: "DELETE",
+            crossDomain: true,
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: "/person-controller/delete/" + personIdElement,
+            dataType: "JSON",
+            success: function(response) {
+                alert(JSON.stringify(response));
+            },
+            error: function(request, status, error) {
+                console.log("Error while digesting request")
+                console.log("Request value ↓")
+                console.log(request)
+                console.log("Status value ↓")
+                console.log(status);
+                console.log("Error value ↓")
+                console.log(error);
+            }
+        });
+    }
+
 </script>
 
 <form>
@@ -62,6 +182,6 @@
     <button onClick="read()">Read</button>
     <button onClick="readAll()">Read All</button>
     <button onClick="update()">Update</button>
-    <button onClick="delete()">Delete</button>
+    <button onClick="deletePerson()">Delete</button>
 </form>
 
